@@ -1,0 +1,35 @@
+一、说明
+	网络时间协议Network Time Protocol(NTP) 是一种确保时钟保持准确的方法。如果可以访问互联网，只需安装ntp的客户端软件到互联网上的公共ntp服务器自动修正时间即可。
+
+二、准备
+	1.ntp源码包：ntp-4.2.4p7.tar.gz
+	2.交叉编译工具：arm-linux-gcc
+
+三、移植步骤
+	1.解压源码包到指定目录
+		$ tar -zxvf ntp-4.2.6p4.tar.gz
+	2.进入源码文件夹
+		$ cd ntp-4.2.6p4
+		在ntpd/ntp_loopfilter.c中增加下面的宏定义
+			#ifndef MOD_NANO
+			#define MOD_NANO  0x2000
+			#endif
+	3.配置文件
+		$ ./configure --prefix=$PWD/install --exec-prefix=$PWD/install --host=arm-linux CC=arm-linux-gcc
+		--prefix:指定安装目录
+	4.编译并安装
+		$ make && make install
+	5.将install/下 bin/目录中 ntpd   ntpdate   ntpdc   ntp-keygen   ntpq   ntptime   ntptrace   ntp-wait   sntp   tickad 拷贝到嵌入式板子/usr/bin目录下
+
+五、使用方法
+	1.同步服务器时间	
+		$ ntpdate 133.100.11.8
+		该服务器地址 日本 福冈大学
+	2.显示UTC时间
+		$ date -u
+	3.将系统时间写入到硬件时钟
+		$ hwclock -w
+
+jeehong <jeehong1908@gmail.com>
+2016/4/5
+
