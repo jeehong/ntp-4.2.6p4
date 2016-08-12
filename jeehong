@@ -23,7 +23,7 @@
 
 五、使用方法
 	1.同步服务器时间	
-		$ ntpdate 133.100.11.8
+  		$ ntpdate 133.100.11.8
 		该服务器地址 日本 福冈大学
 		使用更多服务器资源，请查阅网址：http://www.ntp.org.cn/
 	2.显示UTC时间
@@ -49,7 +49,13 @@
 
 	原因：缺少lynx
 	解决办法：$sudo apt-get install lynx
-
+	
+        2.如果CST时间显示比实际时间快8小时，则确保两件事
+        $ cat /etc/timezone
+        显示信息为 Asia/Shanghai
+        $ ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+        更改时区
+        
 jeehong <jeehong1908@gmail.com>
 2016/4/5
 
